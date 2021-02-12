@@ -1,7 +1,8 @@
-div {
+.pokelist {
     text-align: center;
     border: solid black 1px;
     flex-wrap: wrap;
+    columns: 2;
 }
 img {
     height: 200px;

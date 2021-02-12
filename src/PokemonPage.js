@@ -9,6 +9,8 @@ export default class PokemonPage extends React.Component {
   state = {
     name: '',
     type: '',
+    shape: '',
+    ability: '',
     attack: 0,
     defense: 0,
     pokemons: pokemons,
@@ -39,7 +41,7 @@ export default class PokemonPage extends React.Component {
         
         const balls = this.state.pokemons
 
-        if (this.state.sortBy === 'pokemon' || this.state.sortBy === 'type_1'){
+        if (this.state.sortBy === 'pokemon' || this.state.sortBy === 'type_1' || this.state.sortBy === 'shape' || this.state.sortBy === 'ability_1'){
             if (this.state.sortOrder === 'low') {
             balls.sort(
             (a, b) => 
@@ -88,6 +90,8 @@ export default class PokemonPage extends React.Component {
           <select onChange={this.handleChange}>
             <option value="pokemon">Name</option>
             <option value="type_1">Type</option>
+            <option value="shape">Shape</option>
+            <option value="ability_1">Ability</option>
             <option value="attack">Attack</option>
             <option value="defense">Defense</option>
           </select>
