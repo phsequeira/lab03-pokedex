@@ -41,13 +41,24 @@ header {
   text-align: right;
   height: 70px;
   background-color: lightblue;
-  
 }
 
 .sidebar {
   float: left;
 }
 
-div {
-  text-align: center;
+.pokepage {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "side poke poke poke"
+    "side poke poke poke"
+    "side poke poke poke"
+    "side poke poke poke"
+    "side poke poke poke";
 }
+.sidebar { grid-area: side; }
+.poke { grid-area: poke; }
+

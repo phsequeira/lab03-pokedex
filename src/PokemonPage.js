@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import PokeList from './Pokelist/PokeList';
 import pokemons from './pokemon';
+import request from 'superagent';
 
 
 
@@ -84,6 +85,7 @@ export default class PokemonPage extends React.Component {
 
       return (
         <>
+        <body className='pokepage'>
         <div className='sidebar'>
         Sort By
         <form onSubmit = {this.button}>
@@ -104,7 +106,7 @@ export default class PokemonPage extends React.Component {
           </form>
           </div>
           <PokeList filteredPokemon={this.state.filteredPokemon}></PokeList>
-          
+          </body>
         </>
       );
   }
