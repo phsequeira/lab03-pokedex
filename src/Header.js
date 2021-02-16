@@ -5,6 +5,7 @@ export default withRouter(class Header extends Component {
     render() {
         return (
         <header>
+            <img className='logo' src='./Pokeball-PNG-Download-Image.png' />
             <NavLink exact activeClassName="selected" to="/">
                 Home
                 </NavLink>
