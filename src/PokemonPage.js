@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import PokeList from './Pokelist/PokeList';
-import pokemons from './pokemon';
+import Spinner from './spinner.js';
 import request from 'superagent';
 
 
@@ -14,75 +14,55 @@ export default class PokemonPage extends React.Component {
     ability: '',
     attack: 0,
     defense: 0,
-    pokemons: pokemons,
-    sortOrder: 'low',
-    sortBy: 'pokemon',
+    pokemons: [],
+    sortOrder: '',
+    sortBy: '',
     query: '',
-    filteredPokemon: pokemons
+    loading: false,
+    
   }
+    componentDidMount = async () => {
+      await this.fetchPokemon();
+    }
 
+    fetchPokemon = async () => {
+      this.setState({ loading: true });
 
-    handleChange = (e) => {
+      const data = await request.get(`https://pokedex-alchemy.herokuapp.com/api/pokedex?pokemon=${this.state.query}&sort=${this.state.sortBy}&direction=${this.state.sortOrder}`)
+
+      this.setState({
+        loading: false,
+        pokemons: data.body.results,
+      })
+    }
+
+    handleChange = async (e) => {
         this.setState({ 
             sortBy: e.target.value,
         });
     }
-    handleHighLowChange = (e) => {
+    handleHighLowChange = async (e) => {
         this.setState({
             sortOrder: e.target.value,
         })
     }
-    handleInputChange = (e) => {
+    handleInputChange = async (e) => {
         this.setState({
           query: e.target.value,
         });
       }
-    button= (e) => {
+    button = async (e) => {
         e.preventDefault()
+
+        await this.fetchPokemon()
+                
+    }
         
-        const balls = this.state.pokemons
-
-        if (this.state.sortBy === 'pokemon' || this.state.sortBy === 'type_1' || this.state.sortBy === 'shape' || this.state.sortBy === 'ability_1'){
-            if (this.state.sortOrder === 'low') {
-            balls.sort(
-            (a, b) => 
-              a[this.state.sortBy].localeCompare(b[this.state.sortBy]))
-            }
-
-            if (this.state.sortOrder === 'high') {
-                balls.sort(
-                    (a, b) => 
-                      b[this.state.sortBy].localeCompare(a[this.state.sortBy]))
-            }
-        }
-    
-            if (this.state.sortBy === 'attack' || this.state.sortBy === 'defense'){
-                if (this.state.sortOrder === 'low') { 
-                balls.sort(
-                (a, b) => 
-                  a[this.state.sortBy] - b[this.state.sortBy])
-                }
-
-            if (this.state.sortOrder === 'high'){
-                balls.sort(
-                (a, b) => 
-                b[this.state.sortBy] - a[this.state.sortBy])
-                        }
-                    }
-        this.setState({
-                filteredPokemon: balls.filter(pokemon => pokemon.pokemon.includes(this.state.query))
-
-            })
-        
-        }
+      
 
   render() {
 
-    
-
-
-        
-
+  
       return (
         <>
         <body className='pokepage'>
@@ -98,14 +78,18 @@ export default class PokemonPage extends React.Component {
             <option value="defense">Defense</option>
           </select>
           <select onChange={this.handleHighLowChange}>
-            <option value="low">Low to High (A-Z/1-+)</option>
-            <option value="high">High to Low (Z-A/+-1)</option>
+            <option value="aesc">Asending (A-Z/1-+)</option>
+            <option value="desc">Desending (Z-A/+-1)</option>
           </select>
           <input onChange={this.handleInputChange}/>
           <button>Search</button>
           </form>
           </div>
-          <PokeList filteredPokemon={this.state.filteredPokemon}></PokeList>
+          {
+            this.state.loading
+              ? <Spinner />
+              :<PokeList pokemons={this.state.pokemons}></PokeList>
+          }
           </body>
         </>
       );
