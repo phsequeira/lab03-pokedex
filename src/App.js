@@ -7,7 +7,9 @@ import {
 } from 'react-router-dom';
 import PokemonPage from './PokemonPage.js';
 import HomePage from './HomePage.js';
+import DetailPage from './DetailPage.js';
 import Header from './Header.js';
+
 
 export default class App extends Component {
     render() {
@@ -19,12 +21,17 @@ export default class App extends Component {
                         <Route 
                             path="/" 
                             exact
-                            render={(routerProps) => <HomePage {...routerProps} />} 
+                            component={HomePage} 
                         />
                         <Route 
                             path="/pokemon" 
                             exact
-                            render={(routerProps) => <PokemonPage {...routerProps} />} 
+                            component={PokemonPage} 
+                        />
+                        <Route 
+                            path="/:pokemonName" 
+                            exact
+                            component= {DetailPage} 
                         />
                     </Switch>
                 </Router>
