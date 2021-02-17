@@ -66,17 +66,14 @@ header {
 .pokepage {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 1fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
-    "side poke poke poke"
-    "side poke poke poke"
-    "side poke poke poke"
-    "side poke poke poke"
-    "side poke poke poke"
-    "side poke poke poke"
-    "side poke poke poke";
+    "side side side side"
+    "poke poke poke poke"
+    "poke poke poke poke"
+  ;
 }
-.sidebar { grid-area: side; }
+.sidebar { grid-area: side; text-align: center; }
 .poke { grid-area: poke; }
 
